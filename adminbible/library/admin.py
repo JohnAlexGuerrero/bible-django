@@ -9,15 +9,21 @@ class LinksAdmin(admin.ModelAdmin):
 
 
 class BookAdmin(admin.ModelAdmin):
-    list_display = ('name','chapters','collection',)
+    list_display = ('name','chapters','collection','testament')
     
-# class HistoryAdmin(admin.ModelAdmin):
-#     list_display = ('book','chapter','title',)
+    search_fields = ('name', 'collection')
+    
+    ordering = ('collection',)
+    
+    def testament(self, obj):
+        testament = Collection.objects.get(id=obj.collection_id)
+        return "Antiguo Testamento" if testament.section == 'AT' else "Nuevo Testamento"
+    
     
 class TextAdmin(admin.ModelAdmin):
     list_display = ('book','history','chapter','verse','description')
     
-    ordering = ('-history','chapter','verse',)
+    ordering = ('history','chapter','verse',)
     
     search_fields = ('history',)
 
@@ -27,7 +33,7 @@ class QuotesAdmin(admin.ModelAdmin):
     
     search_fields = ('name',)
     
-    ordering = ('name',)
+    ordering = ('-id',)
     
     admin.site.site_title = 'citas'
     
