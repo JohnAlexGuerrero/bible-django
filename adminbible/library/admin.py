@@ -37,17 +37,36 @@ class QuotesAdmin(admin.ModelAdmin):
     
     admin.site.site_title = 'citas'
     
+@admin.register(CharacterStorie)
+class CharacterStorieAdmin(admin.ModelAdmin):
+    list_display = ('character', 'display_stories',)
+    
+    search_fields = ('character',)
+    
+    ordering = ('character',)
+    
+    def display_stories(self, obj):
+        return ', '.join([story.title for story in obj.stories.all()[:5]])
+    
+    display_stories.short_description = 'History'
+
+
+@admin.register(Collection)
+class CollectionAdmin(admin.ModelAdmin):
+    list_display = ('name','number_books',)
+
+    def number_books(self, obj):
+        return Book.objects.filter(collection=obj).count()
+
 admin.site.site_header = 'Bible Graph'
 admin.site.index_title = 'Panel de control de mi sitio'
 
 
 
 admin.site.register(Book, BookAdmin)
-admin.site.register(Collection)
 
 admin.site.register(Quotes, QuotesAdmin)
 admin.site.register(Text, TextAdmin)
 admin.site.register(History)
 admin.site.register(Links, LinksAdmin)
 admin.site.register(Character)
-admin.site.register(CharacterStorie)

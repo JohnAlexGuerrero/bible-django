@@ -6,5 +6,5 @@ use bible_db;
 
 show tables;
 
-describe library_quotes;
+describe ;
 

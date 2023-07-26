@@ -1,6 +1,6 @@
 use bible_db;
 
-describe library_book;
+describe library_collection;
 
 /*table library_quotes*/
 
