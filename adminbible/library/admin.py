@@ -3,9 +3,12 @@ from django.contrib import admin
 from library.models import Book, Collection, Links, CharacterStorie
 from library.models import Text, History, Quotes, Character
 
-
+@admin.register(Links)
 class LinksAdmin(admin.ModelAdmin):
     list_display = ('text',)
+    
+    def display_quotes(self, obj):
+        return ', '.join([link.quote for link in self.quotes.all()[:10]])
 
 
 class BookAdmin(admin.ModelAdmin):
@@ -27,7 +30,7 @@ class TextAdmin(admin.ModelAdmin):
     
     search_fields = ('history',)
 
-
+@admin.register(Quotes)
 class QuotesAdmin(admin.ModelAdmin):
     list_display = ('name','text',)
     
@@ -65,8 +68,6 @@ admin.site.index_title = 'Panel de control de mi sitio'
 
 admin.site.register(Book, BookAdmin)
 
-admin.site.register(Quotes, QuotesAdmin)
 admin.site.register(Text, TextAdmin)
 admin.site.register(History)
-admin.site.register(Links, LinksAdmin)
 admin.site.register(Character)
