@@ -1,0 +1,10 @@
+<h2>Books</h2>
+
+<ul>
+{% for b in object_list %}
+    <li>
+        {{ b.title }}
+        <a href="{% url "book_update" pk=b.id %}">Actualizar</a>
+    </li>
+{% endfor %}
+</ul>
